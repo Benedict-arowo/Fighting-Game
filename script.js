@@ -49,6 +49,11 @@ const p2Name = document.getElementById('p2Name')
 const p1HealthDiv = document.getElementById('p1Health')
 const p2HealthDiv = document.getElementById('p2Health')
 
+const p1attack = document.getElementById('p1attack')
+const p1heal = document.getElementById('p1heal')
+const p2attack = document.getElementById('p2attack')
+const p2heal = document.getElementById('p2heal')
+const victorySound = document.getElementById('victory')
 // ** Check if either players health is  0 and if it is, then update isOver to true **
 
 const updateGame = () => {
@@ -92,6 +97,8 @@ class Player {
       const damageAmount = Math.floor(Math.random() * attackDmg)
       enemy.health -= damageAmount;
       updateGame(player, enemy)
+      p1attack.currentTime = 0;
+      p1attack.play()
       console.log(`${player.name} had attack ${enemy.name} with ${damageAmount}`)
     }
 
@@ -112,6 +119,8 @@ class Player {
       player.health += healAmount
     }
 
+    p1heal.currentTime = 0;
+    p1heal.play()
     updateGame()
 
     // Get random number between 1 - 5 and store that in hpAmount
@@ -130,13 +139,13 @@ class Game {
 
   // ** If the game is over and a player has 0 health declare the winner! **
   declareWinner() {
-    const victorySound = document.getElementById('victory');
     let winner;
     if (this.isOver) {
       
       winner = p1.health > p2.health ? `Winner: ${p1.name}` : `Winner: ${p2.name}`
 
       resultDiv.innerText = winner;
+      victorySound.currentTime = 0
       victorySound.play();
     }
 
